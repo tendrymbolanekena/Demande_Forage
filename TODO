@@ -1,0 +1,18 @@
+CREATION DE BASE DE  (forage)
+    -CREATION DE TABLE Demande
+        - idDemande 
+        - reference (UNIQUE)
+        - nom
+        - lieu 
+        - date (date time )  
+
+    - CREATION DE TABLE Status
+        - idStatus
+        - status (UNIQUE)
+
+    - CREATION DE TABLE Status_demande
+        - idStatusDemande
+        - idDemande (FOREIGN KEY REFERENCES demandes(idDemande))
+        - idStatus (FOREIGN KEY)
+        - dateStatus (date time)
+
