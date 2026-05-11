@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS devis (
+    idDevis BIGINT PRIMARY KEY AUTO_INCREMENT,
+    reference VARCHAR(255) UNIQUE NOT NULL,
+    montant DECIMAL(10, 2) NOT NULL,
+    idDemande BIGINT NOT NULL,
+    dateDevis DATETIME,
+    FOREIGN KEY (idDemande) REFERENCES Demande(idDemande) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS detail_devis (
+    idDetailDevis BIGINT PRIMARY KEY AUTO_INCREMENT,
+    idDevis BIGINT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    quantite INT NOT NULL,
+    prixUnitaire DECIMAL(10, 2) NOT NULL,
+    montant DECIMAL(10, 2) AS (quantite * prixUnitaire) STORED,
+    FOREIGN KEY (idDevis) REFERENCES devis(idDevis) ON DELETE CASCADE
+);
