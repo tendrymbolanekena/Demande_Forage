@@ -160,6 +160,9 @@
                                     <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/delete" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr?')">Supprimer</a>
                                 </div>
                             </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/devis/${demande.idDemande}" class="btn btn-primary">Créer un devis</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

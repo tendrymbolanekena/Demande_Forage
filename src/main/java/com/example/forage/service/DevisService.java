@@ -3,6 +3,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.forage.repository.DevisRepository;
+import com.example.forage.entity.Devis;
 
 @Service
 @Transactional
