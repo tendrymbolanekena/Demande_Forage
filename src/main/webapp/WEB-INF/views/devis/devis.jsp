@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📋 Création de Devis</h1>
+            <h1>Création de Devis</h1>
             <p>Remplissez le formulaire ci-dessous pour créer un nouveau devis avec les détails</p>
         </div>
         
