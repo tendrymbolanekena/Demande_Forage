@@ -4,7 +4,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             addDetail();
             
-            // Définir la date d'aujourd'hui par défaut
+            
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateDevis').value = today;
         });

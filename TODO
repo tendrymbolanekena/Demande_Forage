@@ -16,3 +16,20 @@ CREATION DE BASE DE  (forage)
         - idStatus (FOREIGN KEY)
         - dateStatus (date time)
 
+    - CREATION DE TABLE Devis
+        - idDevis
+        - idDemande (FOREIGN KEY REFERENCES demandes(idDemande))
+        - montant
+        - dateDevis (date time)
+        - status (ENUM: EN_COURS, ACCEPTE, REFUSE)
+    
+    - CREATION DE TABLE detail_devis
+        - idDetailDevis
+        - idDevis (FOREIGN KEY REFERENCES devis(idDevis))
+        - description
+        - prixUnitaire
+        - quantite
+
+    
+
+

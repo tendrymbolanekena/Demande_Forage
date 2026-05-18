@@ -1,22 +1,15 @@
 package com.example.forage.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.example.forage.service.DevisService;
 import com.example.forage.service.DetailDevisService;
-import com.example.forage.repository.DemandeRepository;
-import com.example.forage.entity.Devis;
-import com.example.forage.entity.DetailDevis;
-import com.example.forage.entity.Demande;
+import com.example.forage.repository.*;
+import com.example.forage.entity.*;
 import java.util.Optional;
 import java.util.List;
 import java.time.LocalDateTime;
@@ -40,6 +33,9 @@ public class DevisController {
 
     @Autowired
     private DetailDevisService detailDevisService;
+
+    @Autowired
+    private StatusDemandeRepository statusDemandeRepository;
 
     // @GetMapping
     // public String index(Model model) {
@@ -124,6 +120,13 @@ public class DevisController {
             if (idDemande != null && idDemande > 0) {
                 Demande demande = demandeRepository.findById(idDemande).orElse(null);
                 devis.setDemande(demande);
+                devis.setStatus(Devis.StatusDevis.EN_COURS);
+                Status status = new Status();
+                status.setIdStatus(4L);
+                StatusDemande statusDemande = new StatusDemande(demande, status,dateDevis.atStartOfDay());
+
+                statusDemandeRepository.save(statusDemande);
+
             }
             
             Devis savedDevis = devisService.saveDevis(devis);
@@ -137,9 +140,9 @@ public class DevisController {
 
             
         } catch (Exception e) {
-         return "redirect:/devis?error=Une erreur est survenue lors de la création du devis";
+         return "redirect:/devis?error="+e.getMessage();
         }
-        return "redirect:/devis";
+        return "redirect:/demandes";
      
     }
 }

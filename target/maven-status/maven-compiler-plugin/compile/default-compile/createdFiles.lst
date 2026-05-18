@@ -25,6 +25,7 @@ com/example/forage/entity/Status.class
 com/example/forage/service/StatusService.class
 com/example/forage/entity/DetailDevis.class
 com/example/forage/entity/District.class
+com/example/forage/entity/Devis$StatusDevis.class
 com/example/forage/service/StatusDemandeService.class
 com/example/forage/repository/StatusDemandeRepository.class
 com/example/forage/controller/Search.class

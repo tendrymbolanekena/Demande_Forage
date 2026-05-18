@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% String ref = "DMD-" + System.currentTimeMillis(); %>
 <!DOCTYPE html>
 <html>
 
@@ -222,8 +223,8 @@
 
         <div class="form-group">
             <label for="reference">Référence *</label>
-            <input type="text" id="reference" name="reference" value="${demande.getReference()}" required
-                placeholder="Ex: DMD-001">
+            <input type="text" id="reference" name="reference" value="<%= ref %>" required
+                placeholder="Ex: DMD-001" readonly>
         </div>
 
         <div class="form-group">

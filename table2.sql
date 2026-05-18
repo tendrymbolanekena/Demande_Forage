@@ -16,3 +16,5 @@ CREATE TABLE IF NOT EXISTS detail_devis (
     montant DECIMAL(10, 2) AS (quantite * prixUnitaire) STORED,
     FOREIGN KEY (idDevis) REFERENCES devis(idDevis) ON DELETE CASCADE
 );
+
+ALTER TABLE devis MODIFY COLUMN status ENUM('EN_COURS','VALIDER') NOT NULL DEFAULT 'EN_COURS';

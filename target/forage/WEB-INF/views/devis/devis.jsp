@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ref = "DEV-" + System.currentTimeMillis();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +14,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📋 Création de Devis</h1>
+            <h1>Création de Devis</h1>
             <p>Remplissez le formulaire ci-dessous pour créer un nouveau devis avec les détails</p>
         </div>
         
@@ -27,7 +30,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="reference">Référence du Devis <span style="color: red;">*</span></label>
-                            <input type="text" id="reference" name="reference" required placeholder="Ex: DEV-2026-001">
+                            <input type="text" id="reference" name="reference" value="<%= ref %>" required placeholder="Ex: DEV-2026-001" readonly>
                             <span class="error-message" id="referenceError">La référence est requise</span>
                         </div>
                         <div class="form-group">

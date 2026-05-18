@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Entity
 @Table(name = "devis")
 public class Devis {
@@ -21,6 +22,9 @@ public class Devis {
 
     private LocalDateTime dateDevis;
 
+    @Enumerated(EnumType.STRING)
+    private StatusDevis status;
+
     @ManyToOne
     @JoinColumn(name = "idDemande", nullable = false)
     private Demande demande;
@@ -28,14 +32,36 @@ public class Devis {
     @OneToMany(mappedBy = "devis", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailDevis> detailDevis;
 
-    // Constructeurs
+    
     public Devis() {
     }
 
-    // Getters et Setters
+    public enum StatusDevis {
+        EN_COURS("en cours"),
+        VALIDER("valider");
+
+        private final String label;
+
+        StatusDevis(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+    }
+
 
     public Long getIdDevis() {
         return idDevis;
+    }
+
+   public void setStatus(StatusDevis status) {
+        this.status = status;
+    }
+
+    public StatusDevis getStatus() {
+        return status;
     }
 
     public void setIdDevis(Long idDevis) {
