@@ -53,5 +53,12 @@ public class StatusDemande {
         return status;
     }
 
- 
+    public void setDateStatus(LocalDateTime dateStatus) {
+        this.dateStatus = dateStatus;
+    }
+
+    public LocalDateTime getDateStatus() {
+        return dateStatus;
+    }
+
 }

@@ -2,35 +2,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestion Status Demande</title>
 </head>
 <body>
-    <h1>Creation ou modification de StatusDemande</h1>
+    <h1>Création ou modification de StatusDemande</h1>
 
     <form action="${pageContext.request.contextPath}/statusdemandes/save" method="post">
-        <input type="hidden" name="idStatusDemande" value="${statusDemande.idStatusDemande}">
+        <!-- Input caché indispensable pour savoir si on modifie ou si on crée -->
+        <input type="hidden" name="idStatusDemande" id="idStatusDemande" value="${statusDemande.idStatusDemande}">
 
-        <label for="idDemande">Demande:</label>
+        <label for="idDemande">Demande :</label>
         <select name="idDemande" id="idDemande" required>
             <option value="0">-- Sélectionnez une demande --</option>
             <c:forEach var="demande" items="${demandes}">
                 <option value="${demande.idDemande}" ${statusDemande.demande != null && statusDemande.demande.idDemande == demande.idDemande ? 'selected' : ''}>
-                    ${demande.description}
+                    ${demande.getReference()}
                 </option>
             </c:forEach>
         </select>
         <br><br>
 
-        <label for="idStatus">Status:</label>
+        <label for="dateStatus">Date du statut :</label>
+        <input type="datetime-local" name="dateStatus" id="dateStatus" value="${statusDemande.getDateStatus() != null ? statusDemande.getDateStatus().toString().replace('T', ' ') : ''}">
+        <br><br>
+
+
+        <label for="idStatus">Statut :</label>
         <select name="idStatus" id="idStatus" required>
-            <option value="0">-- Sélectionnez un status --</option>
+            <option value="0">-- Sélectionnez un statut --</option>
             <c:forEach var="status" items="${statuses}">
                 <option value="${status.idStatus}" ${statusDemande.status != null && statusDemande.status.idStatus == status.idStatus ? 'selected' : ''}>
-                    ${status.libelle}
+                    ${status.getLibelle()}
                 </option>
             </c:forEach>
         </select>
@@ -39,17 +45,49 @@
         <button type="submit">Enregistrer</button>
     </form>
 
-   <script>
+    <script>
         const demandeSelect = document.getElementById('idDemande');
         const statusSelect = document.getElementById('idStatus');
+        const idStatusDemandeInput = document.getElementById('idStatusDemande');
+        const dateStatusInput = document.getElementById('dateStatus');
 
-        const idStatus=statusSelect.value;
-        const idDemande=demandeSelect.value;
+        async function verifierStatusDemande() {
+            const idDemande = demandeSelect.value;
+            const idStatus = statusSelect.value;
 
-        const response = await fetch('/forage/statusdemandes/' + idDemande + '/' + idStatus);
-        const statusDemande = await response.json();
-        console.log(statusDemande);
+            if (idDemande !== "0" && idStatus !== "0") {
+                try {
+                    const response = await fetch('${pageContext.request.contextPath}/statusdemandes/' + idDemande + '/' + idStatus);
+                    if (response.ok) {
+                        const data = await response.json(); // Reçoit le tableau JSON []
+                        console.log("Données reçues du serveur :", data);
 
-   </script> 
+                        if (data) {
+                            console.log("Statut Demande existant trouvé ! ID :", data.idStatusDemande);
+                            idStatusDemandeInput.value = data.idStatusDemande || "";
+                            dateStatusInput.value = data.dateStatus || "";
+                        } else {
+                            console.log("Aucun historique trouvé. Mode création active.");
+                            idStatusDemandeInput.value = "";
+                            dateStatusInput.value = "";
+                        }
+                    } else if (response.status === 404) {
+                        console.log("Aucun statutDemande trouvé pour cette combinaison.");
+                        idStatusDemandeInput.value = "";
+                    } else {
+                        console.error("Erreur serveur : Status " + response.status);
+                    }
+                } catch (error) {
+                    console.error("Erreur lors de l'analyse des données :", error);
+                }
+            }
+        }
+
+        demandeSelect.addEventListener('change', verifierStatusDemande);
+        statusSelect.addEventListener('change', verifierStatusDemande);
+
+
+        verifierStatusDemande();
+    </script> 
 </body>
 </html>

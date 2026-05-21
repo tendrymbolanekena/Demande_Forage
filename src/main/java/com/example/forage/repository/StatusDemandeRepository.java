@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface StatusDemandeRepository extends JpaRepository<StatusDemande, Long> {
 
-  
-    @Query(value = "SELECT * FROM Status_Demande WHERE idDemande = :demande AND idStatus = :status", nativeQuery = true)
-    List<StatusDemande> findByIdDemandeAndIdStatus(@Param("demande") Long demande, @Param("status") Long status);
+    @Query(value = "SELECT idStatusDemande FROM Status_Demande WHERE idDemande = :demande AND idStatus = :status", nativeQuery = true)
+    List<Long> findIdsByDemandeAndStatus(@Param("demande") Long demande, @Param("status") Long status);
 }

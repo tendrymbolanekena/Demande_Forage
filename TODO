@@ -32,4 +32,5 @@ CREATION DE BASE DE  (forage)
 
     
 
-
+sudo rm -rf /opt/lampp/tomcat/webapps/forage
+   sudo rm -rf /opt/lampp/tomcat/work/Catalina/localhost/forage
