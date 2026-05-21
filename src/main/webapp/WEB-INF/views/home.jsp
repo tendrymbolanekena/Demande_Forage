@@ -80,6 +80,7 @@
         <div class="btn-group">
             <a href="${pageContext.request.contextPath}/demandes">Voir les demandes</a>
             <a href="${pageContext.request.contextPath}/demandes/new">Créer une demande</a>
+            <a href="${pageContext.request.contextPath}/statusdemandes/new">Voir les statuts des demandes</a>
         </div>
         
         <div class="info">
