@@ -21,6 +21,9 @@ public class StatusDemande {
 
     private LocalDateTime dateStatus;
 
+    @Column(name = "observations", columnDefinition = "TEXT DEFAULT 'MANAONA TSY MISY OBSERVATION'")
+    private String observations;
+
     public StatusDemande() {}
 
     public StatusDemande(Demande demande, Status status, LocalDateTime dateStatus) {
@@ -60,5 +63,14 @@ public class StatusDemande {
     public LocalDateTime getDateStatus() {
         return dateStatus;
     }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
 
 }

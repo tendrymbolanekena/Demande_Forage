@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.forage.entity.*;
 import com.example.forage.repository.*;
+import com.example.forage.service.*;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/statusdemandes")
@@ -53,7 +55,23 @@ public class StatusDemandeController {
         response.put("idStatus", sd.getStatus() != null ? sd.getStatus().getIdStatus() : null);
         response.put("statusLibelle", sd.getStatus() != null ? sd.getStatus().getLibelle() : null);
         response.put("dateStatus", sd.getDateStatus() != null ? sd.getDateStatus().toString() : null);
-
+        response.put("observations", sd.getObservations());
         return org.springframework.http.ResponseEntity.ok(response);
-    }   
+    }
+
+    @PostMapping("/save")
+    public String saveStatusDemande(@RequestParam("idStatusDemande") Long idStatusDemande,
+                                    @RequestParam("idDemande") Long idDemande,
+                                    @RequestParam("idStatus") Long idStatus,
+                                    @RequestParam("dateStatus") String dateStatus,
+                                    @RequestParam("observations") String observations) {
+        StatusDemande statusDemande = new StatusDemande();
+        statusDemande.setIdStatusDemande(idStatusDemande);
+        statusDemande.setDemande(demandeService.findById(idDemande).orElse(null));
+        statusDemande.setStatus(statusService.findById(idStatus).orElse(null));
+        statusDemande.setDateStatus(LocalDateTime.parse(dateStatus));
+        statusDemande.setObservations(observations);
+        statusDemandeRepository.save(statusDemande);
+        return "redirect:/statusdemandes/new";
+    }
 }

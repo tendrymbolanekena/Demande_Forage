@@ -30,6 +30,9 @@
         <input type="datetime-local" name="dateStatus" id="dateStatus" value="${statusDemande.getDateStatus() != null ? statusDemande.getDateStatus().toString().replace('T', ' ') : ''}">
         <br><br>
 
+        <label for="observations">Observations :</label>
+        <textarea name="observations" id="observations">${statusDemande.getObservations()}</textarea>
+        <br><br>
 
         <label for="idStatus">Statut :</label>
         <select name="idStatus" id="idStatus" required>
@@ -50,6 +53,7 @@
         const statusSelect = document.getElementById('idStatus');
         const idStatusDemandeInput = document.getElementById('idStatusDemande');
         const dateStatusInput = document.getElementById('dateStatus');
+        const observationsInput = document.getElementById('observations');
 
         async function verifierStatusDemande() {
             const idDemande = demandeSelect.value;
@@ -66,10 +70,12 @@
                             console.log("Statut Demande existant trouvé ! ID :", data.idStatusDemande);
                             idStatusDemandeInput.value = data.idStatusDemande || "";
                             dateStatusInput.value = data.dateStatus || "";
+                            observationsInput.value = data.observations || "";
                         } else {
                             console.log("Aucun historique trouvé. Mode création active.");
                             idStatusDemandeInput.value = "";
                             dateStatusInput.value = "";
+                            observationsInput.value = "";
                         }
                     } else if (response.status === 404) {
                         console.log("Aucun statutDemande trouvé pour cette combinaison.");
