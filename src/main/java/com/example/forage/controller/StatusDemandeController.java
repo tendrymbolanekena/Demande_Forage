@@ -44,6 +44,6 @@ public class StatusDemandeController {
 
     @GetMapping("/{idDemande}/{idStatus}")
     public StatusDemande voirStatusDemande(@PathVariable Long idDemande, @PathVariable Long idStatus, Model model) {
-        return statusDemandeRepository.findStatusesByDemandeAndStatus(idDemande, idStatus);
+        return statusDemandeRepository.findByIdDemandeAndIdStatus(idDemande, idStatus).get(0);
     }
 }
