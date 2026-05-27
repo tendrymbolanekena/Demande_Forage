@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.forage.entity.*;
 import com.example.forage.repository.*;
 import com.example.forage.service.*;
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Controller
 @RequestMapping("/statusdemandes")
@@ -27,6 +27,12 @@ public class StatusDemandeController {
 
     @Autowired
     private StatusDemandeRepository statusDemandeRepository;
+
+    @Autowired
+    private StatusDemandeService statusDemandeService;
+
+    @Autowired
+    private CouleurService couleurService;
 
     @GetMapping("/new")
     public String creerStatusDemande(Model model) {
@@ -60,17 +66,20 @@ public class StatusDemandeController {
     }
 
     @PostMapping("/save")
-    public String saveStatusDemande(@RequestParam("idStatusDemande") Long idStatusDemande,
+    public String saveStatusDemande(@RequestParam(value = "idStatusDemande", required = false) Long idStatusDemande,
                                     @RequestParam("idDemande") Long idDemande,
                                     @RequestParam("idStatus") Long idStatus,
                                     @RequestParam("dateStatus") String dateStatus,
                                     @RequestParam("observations") String observations) {
         StatusDemande statusDemande = new StatusDemande();
-        statusDemande.setIdStatusDemande(idStatusDemande);
+        if (idStatusDemande != null) {
+            statusDemande.setIdStatusDemande(idStatusDemande);
+        }
         statusDemande.setDemande(demandeService.findById(idDemande).orElse(null));
         statusDemande.setStatus(statusService.findById(idStatus).orElse(null));
         statusDemande.setDateStatus(LocalDateTime.parse(dateStatus));
         statusDemande.setObservations(observations);
+        statusDemandeService.getStatusDemandesLast(statusDemande);
         statusDemandeRepository.save(statusDemande);
         return "redirect:/statusdemandes/new";
     }

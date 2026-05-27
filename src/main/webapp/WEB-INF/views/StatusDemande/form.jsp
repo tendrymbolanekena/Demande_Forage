@@ -68,12 +68,12 @@
 
                         if (data) {
                             console.log("Statut Demande existant trouvé ! ID :", data.idStatusDemande);
-                            idStatusDemandeInput.value = data.idStatusDemande || "";
+                            idStatusDemandeInput.value = data.idStatusDemande || "0";
                             dateStatusInput.value = data.dateStatus || "";
                             observationsInput.value = data.observations || "";
                         } else {
                             console.log("Aucun historique trouvé. Mode création active.");
-                            idStatusDemandeInput.value = "";
+                            idStatusDemandeInput.value = "0";
                             dateStatusInput.value = "";
                             observationsInput.value = "";
                         }

@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.example.forage.service.DevisService;
-import com.example.forage.service.DetailDevisService;
+import com.example.forage.service.*;
 import com.example.forage.repository.*;
 import com.example.forage.entity.*;
 import java.util.Optional;
@@ -27,6 +26,9 @@ public class DevisController {
 
     @Autowired
     private DevisService devisService;
+
+    @Autowired
+    private StatusDemandeService statusDemandeService;
 
     @Autowired
     private DemandeRepository demandeRepository;
@@ -124,7 +126,7 @@ public class DevisController {
                 Status status = new Status();
                 status.setIdStatus(4L);
                 StatusDemande statusDemande = new StatusDemande(demande, status,dateDevis.atStartOfDay());
-
+                statusDemandeService.getStatusDemandesLast(statusDemande);
                 statusDemandeRepository.save(statusDemande);
 
             }

@@ -12,4 +12,7 @@ public interface StatusDemandeRepository extends JpaRepository<StatusDemande, Lo
 
     @Query(value = "SELECT idStatusDemande FROM Status_Demande WHERE idDemande = :demande AND idStatus = :status", nativeQuery = true)
     List<Long> findIdsByDemandeAndStatus(@Param("demande") Long demande, @Param("status") Long status);
+
+    @Query(value = "SELECT * FROM Status_Demande WHERE idDemande = :demande AND idStatus != :status ORDER BY dateStatus DESC LIMIT 1", nativeQuery = true)
+    StatusDemande findLatestByDemande(@Param("demande") Long demande , @Param("status") Long status);
 }

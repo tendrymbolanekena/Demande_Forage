@@ -24,6 +24,12 @@ public class StatusDemande {
     @Column(name = "observations", columnDefinition = "TEXT DEFAULT 'MANAONA TSY MISY OBSERVATION'")
     private String observations;
 
+    private double nbJours;
+
+    @ManyToOne
+    @JoinColumn(name = "idCouleur")
+    private Couleur couleur;
+
     public StatusDemande() {}
 
     public StatusDemande(Demande demande, Status status, LocalDateTime dateStatus) {
@@ -34,6 +40,14 @@ public class StatusDemande {
 
     public void setIdStatusDemande(Long idStatusDemande) {
         this.idStatusDemande = idStatusDemande;
+    }
+
+    public void setNbJours(double nbJours) {
+        this.nbJours = nbJours;
+    }
+
+    public double getNbJours() {
+        return nbJours;
     }
 
     public Long getIdStatusDemande() {
@@ -70,6 +84,14 @@ public class StatusDemande {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public void setCouleur(Couleur couleur) {
+        this.couleur = couleur;
+    }
+
+    public String getCouleur() {
+        return couleur != null ? couleur.getNom() : null;
     }
 
 
