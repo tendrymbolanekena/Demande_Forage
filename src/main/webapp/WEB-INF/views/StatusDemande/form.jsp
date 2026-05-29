@@ -7,11 +7,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion Status Demande</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/statusDmd.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+        }
+        .page-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: #f5f5f5;
+        }
+    </style>
 </head>
-<body>
-    <h1>Création ou modification de StatusDemande</h1>
+<body class="with-sidebar">
+    <div class="page-wrapper">
+        <jsp:include page="/WEB-INF/views/shared/sidebar.jsp" />
+        <div class="main-content">
+            <h1>Création ou modification de StatusDemande</h1>
 
-    <form action="${pageContext.request.contextPath}/statusdemandes/save" method="post">
+            <form action="${pageContext.request.contextPath}/statusdemandes/save" method="post">
         <!-- Input caché indispensable pour savoir si on modifie ou si on crée -->
         <input type="hidden" name="idStatusDemande" id="idStatusDemande" value="${statusDemande.idStatusDemande}">
 
@@ -95,5 +119,7 @@
 
         verifierStatusDemande();
     </script> 
+        </div>
+    </div>
 </body>
 </html>

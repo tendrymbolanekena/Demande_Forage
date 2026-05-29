@@ -4,20 +4,35 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forage - Accueil</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #e2e4ecff 0%, #ece8efff 100%);
             min-height: 100vh;
             display: flex;
+        }
+        .page-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         .container {
             background: white;
@@ -73,7 +88,10 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="page-wrapper">
+        <jsp:include page="/WEB-INF/views/shared/sidebar.jsp" />
+        <div class="main-content">
+            <div class="container">
         <h1> Gestion de Forage</h1>
         <p>Bienvenue dans l'application de gestion des demandes de forage</p>
         
@@ -85,6 +103,8 @@
         
         <div class="info">
             <p><strong>Info :</strong> Utilisez le menu ci-dessus pour gérer vos demandes de forage</p>
+        </div>
+            </div>
         </div>
     </div>
 </body>

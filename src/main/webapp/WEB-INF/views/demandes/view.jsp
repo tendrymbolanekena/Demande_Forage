@@ -5,17 +5,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails Demande</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
-            padding: 20px;
+            display: flex;
+        }
+        .page-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
         }
         .container {
             max-width: 600px;
@@ -26,7 +41,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #bec0cbff;
+            color: #667eea;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -106,49 +121,52 @@
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="${pageContext.request.contextPath}/">Accueil</a> >
-            <a href="${pageContext.request.contextPath}/demandes">Demandes</a> >
-            Détails
-        </div>
-        
-        <h1>📝 Détails de la Demande</h1>
-        
-        <div class="info-group">
-            <div class="label">ID Demande</div>
-            <div class="value">${demande.getIdDemande()}</div>
-        </div>
-        
-        <div class="info-group">
-            <div class="label">Référence</div>
-            <div class="value"><strong>${demande.getReference()}</strong></div>
-        </div>
-        
-        <div class="info-group">
-            <div class="label">Nom Demandeur</div>
-            <div class="value">${demande.getNom()}</div>
-        </div>
-        
-        <div class="info-group">
-            <div class="label">Lieu</div>
-            <div class="value">${demande.getLieu()}</div>
-        </div>
-        
-        <div class="info-group">
-            <div class="label">Date de Création</div>
-            <div class="value">
-                <fmt:formatDate value="${demande.date}" pattern="dd/MM/yyyy HH:mm:ss"/>
-            </div>
-        </div>
-        
-        <c:if test="${not empty demande.statusDemandes}">
-            <div class="info-group">
-                <div class="label">Statuts</div>
-                <c:forEach var="sd" items="${demande.statusDemandes}">
+<body class="with-sidebar">
+    <div class="page-wrapper">
+        <jsp:include page="/WEB-INF/views/shared/sidebar.jsp" />
+        <div class="main-content">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/">Accueil</a> >
+                    <a href="${pageContext.request.contextPath}/demandes">Demandes</a> >
+                    Détails
+                </div>
+                
+                <h1>Détails de la Demande</h1>
+                
+                <div class="info-group">
+                    <div class="label">ID Demande</div>
+                    <div class="value">${demande.getIdDemande()}</div>
+                </div>
+                
+                <div class="info-group">
+                    <div class="label">Référence</div>
+                    <div class="value"><strong>${demande.getReference()}</strong></div>
+                </div>
+                
+                <div class="info-group">
+                    <div class="label">Nom Demandeur</div>
+                    <div class="value">${demande.getNom()}</div>
+                </div>
+                
+                <div class="info-group">
+                    <div class="label">Lieu</div>
+                    <div class="value">${demande.getLieu()}</div>
+                </div>
+                
+                <div class="info-group">
+                    <div class="label">Date de Création</div>
                     <div class="value">
-                        <span class="status-badge">${sd.status.libelle}</span>
+                        <fmt:formatDate value="${demande.date}" pattern="dd/MM/yyyy HH:mm:ss"/>
+                    </div>
+                </div>
+                
+                <c:if test="${not empty demande.statusDemandes}">
+                    <div class="info-group">
+                        <div class="label">Statuts</div>
+                        <c:forEach var="sd" items="${demande.statusDemandes}">
+                            <div class="value">
+                                <span class="status-badge">${sd.status.libelle}</span>
                         - <fmt:formatDate value="${sd.dateStatus}" pattern="dd/MM/yyyy"/>
                     </div>
                 </c:forEach>
@@ -156,10 +174,14 @@
         </c:if>
         
         <div class="btn-group">
-            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/edit" class="btn-edit">✏️ Éditer</a>
-            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/delete" class="btn-delete" onclick="return confirm('Êtes-vous sûr?')">🗑️ Supprimer</a>
-            <a href="${pageContext.request.contextPath}/demandes" class="btn-back">← Retour</a>
+            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/edit" class="btn-edit">Éditer</a>
+            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/delete" class="btn-delete" onclick="return confirm('Êtes-vous sûr?')">Supprimer</a>
+            <a href="${pageContext.request.contextPath}/demandes" class="btn-back">Retour</a>
+        </div>
+            </div>
         </div>
     </div>
+</body>
+</html>
 </body>
 </html>

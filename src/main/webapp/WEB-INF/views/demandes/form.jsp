@@ -6,7 +6,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire Demande</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
     <style>
         * {
             margin: 0;
@@ -14,10 +16,26 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
+            display: flex;
+        }
+
+        .page-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
             padding: 20px;
+            overflow-y: auto;
         }
 
         .container {
@@ -170,7 +188,10 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="page-wrapper">
+        <jsp:include page="/WEB-INF/views/shared/sidebar.jsp" />
+        <div class="main-content">
+            <div class="container">
         <div class="breadcrumb">
             <a href="${pageContext.request.contextPath}/">Accueil</a> >
             <a href="${pageContext.request.contextPath}/demandes">Demandes</a> >
@@ -256,6 +277,8 @@
             <a href="${pageContext.request.contextPath}/demandes" class="btn-cancel">Annuler</a>
         </div>
         </form>
+            </div>
+        </div>
     </div>
 
     <script>

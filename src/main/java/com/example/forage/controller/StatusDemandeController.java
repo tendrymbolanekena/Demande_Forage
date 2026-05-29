@@ -34,6 +34,13 @@ public class StatusDemandeController {
     @Autowired
     private CouleurService couleurService;
 
+    @GetMapping
+    public String listStatusDemandes(Model model) {
+        List<StatusDemande> statusDemandes = statusDemandeRepository.findAll();
+        model.addAttribute("statusDemandes", statusDemandes);
+        return "StatusDemande/list";
+    }
+
     @GetMapping("/new")
     public String creerStatusDemande(Model model) {
         model.addAttribute("statusDemande", new StatusDemande());
@@ -82,5 +89,23 @@ public class StatusDemandeController {
         statusDemandeService.getStatusDemandesLast(statusDemande);
         statusDemandeRepository.save(statusDemande);
         return "redirect:/statusdemandes/new";
+    }
+
+    @GetMapping("/{idStatusDemande}/edit")
+    public String editStatusDemande(@PathVariable Long idStatusDemande, Model model) {
+        StatusDemande statusDemande = statusDemandeRepository.findById(idStatusDemande).orElse(null);
+        if (statusDemande == null) {
+            return "redirect:/statusdemandes";
+        }
+        model.addAttribute("statusDemande", statusDemande);
+        model.addAttribute("demandes", demandeService.findAll());
+        model.addAttribute("statuses", statusService.findAll());
+        return "StatusDemande/form";
+    }
+
+    @GetMapping("/{idStatusDemande}/delete")
+    public String deleteStatusDemande(@PathVariable Long idStatusDemande) {
+        statusDemandeRepository.deleteById(idStatusDemande);
+        return "redirect:/statusdemandes";
     }
 }

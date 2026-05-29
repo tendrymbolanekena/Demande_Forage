@@ -5,20 +5,35 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Demandes</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
+            display: flex;
+        }
+        .page-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
             padding: 20px;
+            overflow-y: auto;
         }
         .header {
-            background: linear-gradient(135deg, #dfe1ecff 0%, #eceaeeff 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 20px;
             border-radius: 10px 10px 0 0;
@@ -54,7 +69,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         thead {
-            background-color: #edeff8ff;
+            background-color: #667eea;
             color: white;
         }
         th {
@@ -82,7 +97,7 @@
             text-align: center;
         }
         .btn-view {
-            background-color: #e0e2eeff;
+            background-color: #667eea;
             color: white;
         }
         .btn-edit {
@@ -98,6 +113,7 @@
         }
         .empty {
             text-align: center;
+
             padding: 40px;
             color: #666;
         }
@@ -114,60 +130,67 @@
         }
     </style>
 </head>
-<body>
-    <div class="breadcrumb">
-        <a href="${pageContext.request.contextPath}/">Accueil</a> > Liste des demandes
-    </div>
-    
-    <div class="container">
-        <div class="header">
-            <h1> Liste des Demandes</h1>
-            <a href="${pageContext.request.contextPath}/demandes/new">+ Créer une demande</a>
-        </div>
-        
-        <c:if test="${empty demandes}">
-            <div class="empty">
-                <p>Aucune demande trouvée. <a href="${pageContext.request.contextPath}/demandes/new">Créer une première demande</a></p>
+<body class="with-sidebar">
+    <div class="page-wrapper">
+        <jsp:include page="/WEB-INF/views/shared/sidebar.jsp" />
+        <div class="main-content">
+            <div class="breadcrumb">
+                <a href="${pageContext.request.contextPath}/">Accueil</a> > Liste des demandes
             </div>
-        </c:if>
-        
-        <c:if test="${not empty demandes}">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Référence</th>
-                        <th>Lieu</th>
-                        <th>Nom</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="demande" items="${demandes}">
-                        <tr>
-                            <td>${demande.getIdDemande()}</td>
-                            <td><strong>${demande.getReference()}</strong></td>
-                            <td>${demande.getLieu()}</td>
-                            <td>${demande.getNom()}</td>
-                            <td>
-                                <fmt:formatDate value="${demande.getDateAsDate()}" pattern="dd/MM/yyyy HH:mm"/>
-                            </td>
-                            <td>
-                                <div class="actions">
-                                    <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}" class="btn btn-view">Voir</a>
-                                    <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/edit" class="btn btn-edit">Éditer</a>
-                                    <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/delete" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr?')">Supprimer</a>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/devis/${demande.idDemande}" class="btn btn-primary">Créer un devis</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
+            
+            <div class="container">
+                <div class="header">
+                    <h1>Liste des Demandes</h1>
+                    <a href="${pageContext.request.contextPath}/demandes/new">+ Créer une demande</a>
+                </div>
+                
+                <c:if test="${empty demandes}">
+                    <div class="empty">
+                        <p>Aucune demande trouvée. <a href="${pageContext.request.contextPath}/demandes/new">Créer une première demande</a></p>
+                                    </div>
+                                </c:if>
+                                
+                                <c:if test="${not empty demandes}">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Référence</th>
+                                                <th>Lieu</th>
+                                                <th>Nom</th>
+                                                <th>Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="demande" items="${demandes}">
+                                                <tr>
+                                                    <td>${demande.getIdDemande()}</td>
+                                                    <td><strong>${demande.getReference()}</strong></td>
+                                                    <td>${demande.getLieu()}</td>
+                                                    <td>${demande.getNom()}</td>
+                                                    <td>
+                                                        <fmt:formatDate value="${demande.getDateAsDate()}" pattern="dd/MM/yyyy HH:mm"/>
+                                                    </td>
+                                                    <td>
+                                                        <div class="actions">
+                                                            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}" class="btn btn-view">Voir</a>
+                                            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/edit" class="btn btn-edit">Éditer</a>
+                                            <a href="${pageContext.request.contextPath}/demandes/${demande.idDemande}/delete" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr?')">Supprimer</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/devis/${demande.idDemande}" class="btn btn-primary">Créer un devis</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+            </div>
+        </div>
     </div>
+</body>
+</html>
 </body>
 </html>

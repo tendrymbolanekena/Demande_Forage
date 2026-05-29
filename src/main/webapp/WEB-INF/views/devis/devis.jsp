@@ -9,10 +9,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création de Devis</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/devis.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+        }
+        .page-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f5f5f5;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
+<body class="with-sidebar">
+    <div class="page-wrapper">
+        <jsp:include page="/WEB-INF/views/shared/sidebar.jsp" />
+        <div class="main-content">
         <div class="header">
             <h1>Création de Devis</h1>
             <p>Remplissez le formulaire ci-dessous pour créer un nouveau devis avec les détails</p>
@@ -120,11 +142,12 @@
                 
               
                 <div class="actions">
-                    <button type="submit" class="btn-primary">✓ Créer le Devis</button>
-                    <button type="reset" class="btn-secondary">↻ Réinitialiser</button>
-                    <a href="${pageContext.request.contextPath}/" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">← Retour</a>
+                    <button type="submit" class="btn-primary">Créer le Devis</button>
+                    <button type="reset" class="btn-secondary">Réinitialiser</button>
+                    <a href="${pageContext.request.contextPath}/" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Retour</a>
                 </div>
             </form>
+        </div>
         </div>
     </div>
     
