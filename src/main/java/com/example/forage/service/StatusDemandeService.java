@@ -49,11 +49,12 @@ public class StatusDemandeService {
         double nbJours = calculerNbJoursEntreDates(sd.getDateStatus().toLocalDate(),
                                                     statusDemande.getDateStatus().toLocalDate());
 
-        LocalTime lc = LocalTime.of(16,0);
+        LocalTime lc = LocalTime.of(8,0);
 
-        double heure1 = Duration.between(sd.getDateStatus().toLocalTime(), lc).toHours();
-        double heure2 = Duration.between(statusDemande.getDateStatus().toLocalTime(), lc).toHours();
-
+        double heure1 = Duration.between(lc, sd.getDateStatus().toLocalTime()).toHours();
+        double heure2 = Duration.between(lc, statusDemande.getDateStatus().toLocalTime()).toHours();
+        heure1 = heure1 < 0 ? 0 :(heure1 > 8 ? 8 : heure1);
+        heure2 = heure2 < 0 ? 0 : (heure2 > 8 ? 8 : heure2);
         nbJours +=(heure1 + heure2)/8;
         statusDemande.setNbJours(nbJours);
         statusDemande.setCouleur(couleurService.getCouleurByIntervale(nbJours));
