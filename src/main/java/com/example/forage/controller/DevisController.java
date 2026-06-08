@@ -127,7 +127,7 @@ public class DevisController {
                 status.setIdStatus(4L);
                 StatusDemande statusDemande = new StatusDemande(demande, status,dateDevis.atStartOfDay());
                 statusDemandeService.getStatusDemandesLast(statusDemande);
-                statusDemandeRepository.save(statusDemande);
+                statusDemandeService.saveStatusDemande(statusDemande);
 
             }
             

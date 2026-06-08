@@ -7,8 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.forage.entity.StatusDemande;
 import com.example.forage.repository.StatusDemandeRepository;
 import com.example.forage.service.CouleurService;
-// import java.util.List;
-// import java.util.Optional;
+import com.example.forage.service.ParametreService;
 import java.time.*;
 
 @Service
@@ -21,6 +20,21 @@ public class StatusDemandeService {
     @Autowired
     private CouleurService couleurService;
 
+    @Autowired
+    private ParametreService parametreService;
+
+
+    public StatusDemande saveStatusDemande(StatusDemande statusDemande) {
+        if (statusDemande == null) {
+            return null;
+        }
+        
+        StatusDemande saved = statusDemandeRepository.save(statusDemande);
+        
+        parametreService.verifierEtCreerAlertes(saved);
+        
+        return saved;
+    }
 
     public double calculerNbJoursEntreDates(LocalDate dateDebut, LocalDate dateFin) {
         double jours = 0;
@@ -49,7 +63,7 @@ public class StatusDemandeService {
         double nbJours = calculerNbJoursEntreDates(sd.getDateStatus().toLocalDate(),
                                                     statusDemande.getDateStatus().toLocalDate());
 
-        LocalTime lc = LocalTime.of(8,0);
+         LocalTime lc = LocalTime.of(8,0);
 
         double heure1 = Duration.between(lc, sd.getDateStatus().toLocalTime()).toHours();
         double heure2 = Duration.between(lc, statusDemande.getDateStatus().toLocalTime()).toHours();
@@ -57,7 +71,7 @@ public class StatusDemandeService {
         heure2 = heure2 < 0 ? 0 : (heure2 > 8 ? 8 : heure2);
         nbJours +=(heure1 + heure2)/8;
         statusDemande.setNbJours(nbJours);
-        statusDemande.setCouleur(couleurService.getCouleurByIntervale(nbJours));
+        statusDemande.setParametre(parametreService.getParametreByIntervale(nbJours));
         
     }
 

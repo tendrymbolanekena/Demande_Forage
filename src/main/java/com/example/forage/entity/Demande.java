@@ -4,11 +4,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Demande")
+@JsonIgnoreProperties({"statusDemandes", "alertes"})
 public class Demande {
 
     @Id
@@ -20,6 +23,7 @@ public class Demande {
 
     private String lieu;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
 
     @ManyToOne
@@ -30,8 +34,12 @@ public class Demande {
     @JoinColumn(name = "idCommune", nullable = true)
     private Commune commune;
 
-    @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "demande", fetch = FetchType.LAZY)
+    @JsonIgnore 
     private List<StatusDemande> statusDemandes;
+
+    @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL)
+    private List<Alerte> alertes;
 
     public Demande() {
     }
@@ -110,5 +118,13 @@ public class Demande {
         if (this.date == null)
             return null;
         return Date.from(this.date.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public List<Alerte> getAlertes() {
+        return alertes;
+    }
+
+    public void setAlertes(List<Alerte> alertes) {
+        this.alertes = alertes;
     }
 }

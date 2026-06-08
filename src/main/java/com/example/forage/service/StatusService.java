@@ -24,6 +24,10 @@ public class StatusService {
         return statusRepository.findAll();
     }
 
+    public List<Status> getAllStatuses() {
+        return obtenirTousLesStatuts();
+    }
+
     public Optional<Status> obtenirStatusParId(Long id) {
         return statusRepository.findById(id);
     }
