@@ -15,8 +15,8 @@ public class Couleur {
     private double intervalle1;
     private double intervalle2;
 
-    @OneToMany(mappedBy = "couleur")
-    private List<StatusDemande> statusDemandes;
+    // @OneToMany(mappedBy = "couleur")
+    // private List<StatusDemande> statusDemandes;
 
     public Couleur() {}
 
@@ -26,13 +26,13 @@ public class Couleur {
         this.intervalle2 = intervalle2;
     }
 
-    public Long getIdCouleur() {
-        return idCouleur;
-    }
+    // public Long getIdCouleur() {
+    //     return idCouleur;
+    // }
 
-    public void setIdCouleur(Long idCouleur) {
-        this.idCouleur = idCouleur;
-    }
+    // public void setIdCouleur(Long idCouleur) {
+    //     this.idCouleur = idCouleur;
+    // }
 
     public String getNom() {
         return nom;

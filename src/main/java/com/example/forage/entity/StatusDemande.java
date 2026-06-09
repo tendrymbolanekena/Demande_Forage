@@ -27,8 +27,8 @@ public class StatusDemande {
     private double nbJours;
 
     @ManyToOne
-    @JoinColumn(name = "idCouleur")
-    private Couleur couleur;
+    @JoinColumn(name = "idParametre", nullable = true)
+    private Parametre parametre;
 
     public StatusDemande() {}
 
@@ -86,12 +86,12 @@ public class StatusDemande {
         this.observations = observations;
     }
 
-    public void setCouleur(Couleur couleur) {
-        this.couleur = couleur;
+    public void setParametre(Parametre parametre) {
+        this.parametre = parametre;
     }
 
     public String getCouleur() {
-        return couleur != null ? couleur.getNom() : null;
+        return parametre != null ? parametre.getCouleur() : null;
     }
 
 

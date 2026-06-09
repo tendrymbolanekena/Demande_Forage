@@ -87,8 +87,10 @@ public class StatusDemandeController {
         statusDemande.setDateStatus(LocalDateTime.parse(dateStatus));
         statusDemande.setObservations(observations);
         statusDemandeService.getStatusDemandesLast(statusDemande);
-        statusDemandeRepository.save(statusDemande);
-        return "redirect:/statusdemandes/new";
+        
+        statusDemandeService.saveStatusDemande(statusDemande);
+        
+        return "redirect:/statusdemandes";
     }
 
     @GetMapping("/{idStatusDemande}/edit")

@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "devis")
@@ -20,6 +21,7 @@ public class Devis {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal montant;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateDevis;
 
     @Enumerated(EnumType.STRING)
@@ -30,6 +32,7 @@ public class Devis {
     private Demande demande;
 
     @OneToMany(mappedBy = "devis", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<DetailDevis> detailDevis;
 
     
